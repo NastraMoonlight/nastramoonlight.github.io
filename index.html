@@ -128,6 +128,7 @@
             height: 32px;
         }
 
+        /* Кнопка SeAT */
         .seat-btn {
             display: block;
             background: linear-gradient(45deg, #44475a, var(--accent-purple));
@@ -147,6 +148,59 @@
             box-shadow: 0 0 20px var(--accent-pink);
         }
 
+        /* НОВАЯ СЕКЦИЯ: Стили аниме-галереи */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid rgba(189, 147, 249, 0.3);
+            aspect-ratio: 1 / 1;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 15px var(--accent-pink);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-desc {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(11, 9, 20, 0.9));
+            padding: 8px;
+            font-size: 0.85em;
+            text-align: center;
+            color: var(--accent-moon);
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .gallery-item:hover .gallery-desc {
+            opacity: 1;
+        }
+
         .news-item {
             border-left: 3px solid var(--accent-pink);
             padding-left: 15px;
@@ -164,11 +218,9 @@
     <header>
         <h1>NastraMoonlight</h1>
         <p>🛸 VTuber • EVE Online Streamer • Cosmic Music Creator 🌙</p>
-        
         <div class="social-links">
-            <!-- Ссылки на Twitch и ВК -->
             <a href="https://twitch.tv" target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>
-            <a href="https://vk.ru/nastramoonlight" target="_blank" title="ВКонтакте"><i class="fab fa-vk"></i></a>
+            <a href="https://vk.ru" target="_blank" title="ВКонтакте"><i class="fab fa-vk"></i></a>
         </div>
     </header>
 
@@ -191,6 +243,38 @@
                     </div>
                 </section>
 
+                <!-- Аниме-галерея -->
+                <section class="card">
+                    <h2>🖼️ Галерея артов & скриншотов</h2>
+                    <div class="gallery-grid">
+                        
+                        <!-- Картинка 1 -->
+                        <div class="gallery-item">
+                            <img src="images/art1.jpg" alt="Мой VTuber аватар">
+                            <div class="gallery-desc">Nastra Moonlight Art</div>
+                        </div>
+
+                        <!-- Картинка 2 -->
+                        <div class="gallery-item">
+                            <img src="images/eve1.jpg" alt="Вылет в нули">
+                            <div class="gallery-desc">EVE Online Fleet</div>
+                        </div>
+
+                        <!-- Картинка 3 -->
+                        <div class="gallery-item">
+                            <img src="images/art2.jpg" alt="Чиби версия">
+                            <div class="gallery-desc">Chibi Nastra</div>
+                        </div>
+
+                        <!-- Картинка 4 -->
+                        <div class="gallery-item">
+                            <img src="images/eve2.jpg" alt="Красивый космос">
+                            <div class="gallery-desc">Jita 4-4 View</div>
+                        </div>
+
+                    </div>
+                </section>
+
                 <!-- Музыкальный плеер -->
                 <section class="card">
                     <h2>🎵 Моя Музыка</h2>
@@ -201,7 +285,6 @@
                         </div>
                         <audio controls src="music/cosmic-voyage.mp3"></audio> 
                     </div>
-                    
                     <div class="audio-track">
                         <div>
                             <span>Moonlight Serenade</span>
@@ -226,13 +309,3 @@
                     <div class="news-item">
                         <div class="news-date">Сегодня</div>
                         <h4 style="margin: 5px 0;">Запуск личного сайта!</h4>
-                        <p style="font-size: 0.9em; margin: 5px 0;">Добро пожаловать в мою лунную обитель. Рада видеть вас тут!</p>
-                    </div>
-                </section>
-            </aside>
-
-        </div>
-    </div>
-
-</body>
-</html>
