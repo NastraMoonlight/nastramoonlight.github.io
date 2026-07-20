@@ -1,0 +1,36 @@
+name: Generate Gallery List
+
+on:
+  push:
+    paths:
+      - 'gallery-images/**'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate images JSON
+        run: |
+          echo "[" > images.json
+          cd gallery-images
+          # Находим все PNG и JPG файлы, сортируем по дате изменения (новые вверху)
+          find . -maxdepth 1 -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.webp" \) -printf '%T@ "%f"\n' | \
+          sort -nr | \
+          cut -d' ' -f2- | \
+          paste -sd,\n - >> ../images.json
+          echo "]" >> ../images.json
+          cd ..
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "NastraBot"
+          git config --global user.email "bot@nastramoonlight.ru"
+          git add images.json
+          git diff-index --quiet HEAD || git commit -m "🤖 Авто-обновление списка галереи"
+          git push
