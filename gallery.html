@@ -76,8 +76,7 @@
         <h1>🌙 Лунная Галерея</h1>
         <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> На главную</a>
     </header>
-        <div class="container">
-        <!-- Сюда скрипт выведет ВСЕ картинки из папки автоматически -->
+            <div class="container">
         <div class="gallery-grid" id="gallery-grid">
             <div style="color: #aaa; text-align: center; grid-column: 1/-1; padding: 40px;">Загрузка космических архивов...</div>
         </div>
@@ -88,7 +87,6 @@
         <img id="lightbox-img" class="lightbox-img" src="" alt="Полноэкранный просмотр">
     </div>
 
-    <!-- Автоматическая подгрузка всех картинок из репозитория -->
     <script>
         const repoUser = "nastramoonlight"; 
         const repoName = "nastramoonlight.github.io";
@@ -96,13 +94,10 @@
         async function loadAllImages() {
             try {
                 const response = await fetch(`https://github.com{repoUser}/${repoName}/contents/gallery-images`);
-                if (!response.ok) throw new Error('Не удалось прочесть папку');
+                if (!response.ok) throw new Error('Ошибка чтения');
                 let files = await response.json();
                 
-                // Оставляем только картинки
                 let images = files.filter(f => /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name));
-                
-                // Разворачиваем список (новые файлы — вверху)
                 images.reverse();
 
                 const grid = document.getElementById('gallery-grid');
@@ -116,22 +111,27 @@
                 images.forEach(imgData => {
                     const card = document.createElement('div');
                     card.className = 'gallery-card';
-                    // ИСПРАВЛЕНО: берем прямую ссылку download_url
-                    card.onclick = () => openLightbox(imgData.download_url);
+                    // Исправлено: Прямой адрес скачивания файла
+                    const directUrl = `https://githubusercontent.com{repoUser}/${repoName}/master/gallery-images/${imgData.name}`;
+                    
+                    card.onclick = () => openLightbox(directUrl);
+
+                    // Убираем расширение файла из подписи (.jpg)
+                    const cleanName = imgData.name.replace(/\.[^/.]+$/, "");
 
                     card.innerHTML = `
                         <div class="img-container">
-                            <img src="${imgData.download_url}" alt="${imgData.name}">
+                            <img src="${directUrl}" alt="${imgData.name}">
                         </div>
                         <div class="gallery-info">
-                            <span>${imgData.name.split('.')[0]}</span>
+                            <span>${cleanName}</span>
                         </div>
                     `;
                     grid.appendChild(card);
                 });
 
             } catch (e) {
-                document.getElementById('gallery-grid').innerHTML = '<div style="color: #ff79c6; text-align: center; grid-column: 1/-1;">Ошибка автоматической загрузки картинок.</div>';
+                document.getElementById('gallery-grid').innerHTML = '<div style="color: #ff79c6; text-align: center; grid-column: 1/-1;">Ошибка загрузки картинок.</div>';
                 console.error(e);
             }
         }
