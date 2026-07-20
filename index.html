@@ -122,7 +122,7 @@
     </style>
 </head>
 <body>
-    <div class="sidebar">
+        <div class="sidebar">
         <div class="sidebar-logo">🌙</div>
         <div class="nav-links">
             <a href="#" class="active" title="Главная"><i class="fas fa-home"></i></a>
@@ -154,7 +154,6 @@
                         <h2 style="margin:0; border:0; padding:0;">🖼️ Новинки Галереи</h2>
                         <a href="gallery.html" class="gallery-game-btn">Открыть галерею</a>
                     </div>
-                    <!-- Слайдер теперь наполняется автоматически через JS из папки gallery-images -->
                     <div class="slider-box" id="main-slider">
                         <div style="color: #aaa; padding: 20px; text-align: center;">Загрузка свежих артов...</div>
                         <div class="slide-arrow left-arr" onclick="changeSlide(-1)">&#10094;</div>
@@ -179,7 +178,7 @@
                 <div class="game-card" style="text-align: center;">
                     <h2>🚀 EVE Online</h2>
                     <p>Доступ к корпоративным сервисам альянса.</p>
-                    <a href="https://seat.nastramoonlight.ru" class="game-seat-btn" target="_blank">Войти в SeAT</a>
+                    <a href="https://nastramoonlight.ru" class="game-seat-btn" target="_blank">Войти в SeAT</a>
                 </div>
                 <div class="game-card">
                     <h2>📰 Новостная лента</h2>
@@ -193,7 +192,6 @@
         </div>
     </div>
 
-    <!-- Автоматическая подгрузка картинок в слайдер с GitHub API -->
     <script>
         let currentSlide = 0;
         const repoUser = "nastramoonlight"; 
@@ -202,33 +200,33 @@
         async function loadSliderImages() {
             try {
                 const response = await fetch(`https://github.com{repoUser}/${repoName}/contents/gallery-images`);
-                if (!response.ok) throw new Error('Папка пуста или не найдена');
+                if (!response.ok) throw new Error('Ошибка чтения');
                 let files = await response.json();
                 
-                // Фильтруем только картинки
                 let images = files.filter(f => /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name));
-                
-                // Сортируем: новые файлы (обычно у них имя или id больше, либо переворачиваем список)
                 images.reverse(); 
 
-                if(images.length === 0) return;
-
                 const slider = document.getElementById('main-slider');
-                // Очищаем загрузочный текст, сохраняя стрелочки
-                const arrows = slider.querySelectorAll('.slide-arrow');
-                slider.innerHTML = '';
-                arrows.forEach(a => slider.appendChild(a));
+                if(images.length === 0) {
+                    slider.innerHTML = '<div style="color:#aaa;padding:20px;text-align:center;">Папка gallery-images пуста</div>';
+                    return;
+                }
 
-                // Берем первые 5 самых новых картинок для слайдера на главной
+                slider.innerHTML = `
+                    <div class="slide-arrow left-arr" onclick="changeSlide(-1)">&#10094;</div>
+                    <div class="slide-arrow right-arr" onclick="changeSlide(1)">&#10095;</div>
+                `;
+
                 const limit = Math.min(images.length, 5);
                 for(let i=0; i<limit; i++) {
                     const img = document.createElement('img');
-                    img.src = images[i].path; // Путь к файлу в репозитории
+                    // Исправлено: Прямой адрес скачивания файла
+                    img.src = `https://githubusercontent.com{repoUser}/${repoName}/master/gallery-images/${images[i].name}`;
                     if(i === 0) img.classList.add('active');
                     slider.appendChild(img);
                 }
             } catch (e) {
-                console.log(e);
+                console.error(e);
             }
         }
 
@@ -246,3 +244,4 @@
     </script>
 </body>
 </html>
+
