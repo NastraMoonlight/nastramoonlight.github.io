@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерея | NastraMoonlight VTuber Space</title>
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        :root {
+            --bg-color: #0c0a18;
+            --panel-bg: rgba(18, 14, 36, 0.75);
+            --accent-gold: #f1fa8c; 
+            --accent-pink: #ff79c6;
+            --accent-purple: #bd93f9;
+            --border-gold: rgba(241, 250, 140, 0.4);
+            --text-color: #f8f8f2;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: radial-gradient(circle at top, #1c1545 0%, var(--bg-color) 80%);
+            color: var(--text-color);
+            background-attachment: fixed;
+        }
+
+        header {
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--accent-gold);
+            box-shadow: 0 5px 25px rgba(241, 250, 140, 0.15);
+            background: rgba(12, 10, 24, 0.9);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.8em;
+            color: var(--accent-gold);
+            text-shadow: 0 0 15px rgba(241, 250, 140, 0.6);
+            text-transform: uppercase;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-color);
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 6px;
+            border: 1px solid var(--accent-purple);
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: var(--accent-purple);
+            color: #120e24;
+            box-shadow: 0 0 15px var(--accent-purple);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Стильная сетка галереи */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-card {
+            background: var(--panel-bg);
+            border: 2px solid var(--border-gold);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            transition: 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        .gallery-card:hover {
+            transform: scale(1.03);
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 20px rgba(255, 121, 198, 0.4);
+        }
+
+        .img-container {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-gold);
+        }
+
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .gallery-card:hover .img-container img {
+            transform: scale(1.1);
+        }
+
+        .gallery-info {
+            padding: 12px;
+            text-align: center;
+            background: rgba(12, 10, 24, 0.5);
+        }
+
+        .gallery-info h3 {
+            margin: 0;
+            font-size: 1.1em;
+            color: var(--accent-gold);
+        }
+
+        .gallery-info p {
+            margin: 5px 0 0 0;
+            font-size: 0.85em;
+            color: #aaa;
+        }
+
+        /* Всплывающее окно просмотра (Модальное окно) */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(12, 10, 24, 0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 85%;
+            border-radius: 8px;
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 0 30px rgba(241, 250, 140, 0.3);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px; right: 30px;
+            color: var(--accent-pink);
+            font-size: 2.5em;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .lightbox-close:hover {
+            transform: scale(1.2);
+            text-shadow: 0 0 15px var(--accent-pink);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌙 Лунная Галерея</h1>
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> На главную</a>
+    </header>
+    <div class="container">
+        <div class="gallery-grid">
+
+            <!-- Арт 1 -->
+            <div class="gallery-card" onclick="openLightbox('images/art1.jpg')">
+                <div class="img-container">
+                    <img src="images/art1.jpg" alt="VTuber Главный Арт">
+                </div>
+                <div class="gallery-info">
+                    <h3>Nastra Moonlight</h3>
+                    <p>Основной втубер-аватар</p>
+                </div>
+            </div>
+
+            <!-- Скриншот 1 -->
+            <div class="gallery-card" onclick="openLightbox('images/eve1.jpg')">
+                <div class="img-container">
+                    <img src="images/eve1.jpg" alt="EVE Online Вылет">
+                </div>
+                <div class="gallery-info">
+                    <h3>Космический Флот</h3>
+                    <p>Совместный вылет в клайм-нули</p>
+                </div>
+            </div>
+
+            <!-- Арт 2 -->
+            <div class="gallery-card" onclick="openLightbox('images/art2.jpg')">
+                <div class="img-container">
+                    <img src="images/art2.jpg" alt="Чиби">
+                </div>
+                <div class="gallery-info">
+                    <h3>Chibi Nastra</h3>
+                    <p>Милая чиби-моделька для стримов</p>
+                </div>
+            </div>
+
+            <!-- Скриншот 2 -->
+            <div class="gallery-card" onclick="openLightbox('images/eve2.jpg')">
+                <div class="img-container">
+                    <img src="images/eve2.jpg" alt="Станция">
+                </div>
+                <div class="gallery-info">
+                    <h3>Вид на Jita 4-4</h3>
+                    <p>Атмосферный торговый хаб</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Окно для полноэкранного просмотра -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" class="lightbox-img" src="" alt="Полноэкранный просмотр">
+    </div>
+
+    <!-- Скрипт логики клика по картинке -->
+    <script>
+        function openLightbox(imageSrc) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = imageSrc;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+        }
+    </script>
+
+</body>
+</html>
