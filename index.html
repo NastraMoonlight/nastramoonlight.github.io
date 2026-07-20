@@ -7,214 +7,209 @@
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         :root {
-            --bg-color: #0b0914;
-            --panel-bg: rgba(25, 20, 45, 0.6);
+            --bg-color: #0c0a18;
+            --panel-bg: rgba(18, 14, 36, 0.75);
+            --accent-gold: #f1fa8c; 
             --accent-pink: #ff79c6;
             --accent-purple: #bd93f9;
-            --accent-moon: #f1fa8c;
+            --border-gold: rgba(241, 250, 140, 0.4);
             --text-color: #f8f8f2;
         }
-
         body {
             margin: 0;
             font-family: 'Segoe UI', Roboto, sans-serif;
-            background: radial-gradient(circle at top, #1a153a 0%, var(--bg-color) 70%);
+            background: radial-gradient(circle at top, #1c1545 0%, var(--bg-color) 80%);
             color: var(--text-color);
             background-attachment: fixed;
         }
-
         header {
-            padding: 30px 20px;
+            padding: 40px 20px;
             text-align: center;
-            border-bottom: 2px solid var(--accent-purple);
-            box-shadow: 0 0 15px rgba(189, 147, 249, 0.3);
-            background: rgba(11, 9, 20, 0.8);
+            border-bottom: 3px solid var(--accent-gold);
+            box-shadow: 0 5px 25px rgba(241, 250, 140, 0.15);
+            background: rgba(12, 10, 24, 0.9);
         }
-
         header h1 {
             margin: 0;
-            font-size: 2.8em;
-            color: var(--accent-moon);
-            text-shadow: 0 0 10px var(--accent-purple);
+            font-size: 3em;
+            color: var(--accent-gold);
+            text-shadow: 0 0 15px rgba(241, 250, 140, 0.6);
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
-
         header p {
             color: var(--accent-pink);
-            margin: 8px 0 15px 0;
+            margin: 10px 0 20px 0;
             font-style: italic;
-            font-size: 1.1em;
+            font-size: 1.2em;
+            text-shadow: 0 0 8px rgba(255, 121, 198, 0.4);
         }
-
         .social-links a {
             color: var(--text-color);
-            font-size: 1.8em;
+            font-size: 2em;
             margin: 0 15px;
             text-decoration: none;
             transition: 0.3s;
         }
-
         .social-links a:hover {
-            color: var(--accent-pink);
-            text-shadow: 0 0 10px var(--accent-pink);
+            color: var(--accent-gold);
+            transform: scale(1.2);
+            text-shadow: 0 0 15px var(--accent-gold);
         }
-
         .container {
             max-width: 1200px;
-            margin: 30px auto;
+            margin: 40px auto;
             padding: 0 20px;
         }
-
         .grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 20px;
+            gap: 25px;
         }
-
-        @media (max-width: 900px) {
+        @media (max-width: 950px) {
             .grid { grid-template-columns: 1fr; }
         }
-
         .card {
             background: var(--panel-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(12px);
+            border: 2px solid var(--border-gold);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 15px rgba(189, 147, 249, 0.1), 0 10px 30px rgba(0,0,0,0.5);
         }
-
         h2 {
-            color: var(--accent-pink);
-            border-bottom: 1px dashed var(--accent-purple);
-            padding-bottom: 8px;
+            color: var(--accent-gold);
+            font-size: 1.6em;
+            border-bottom: 2px solid var(--accent-purple);
+            padding-bottom: 10px;
             margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-
         .twitch-wrapper {
             position: relative;
             padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
-            border-radius: 12px;
+            border-radius: 8px;
             border: 2px solid var(--accent-purple);
-            box-shadow: 0 0 15px rgba(189, 147, 249, 0.5);
         }
-
         .twitch-wrapper iframe {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
         }
-
-        .audio-track {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
+        .gallery-header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
         }
-
-        .audio-track span {
-            font-weight: bold;
-            color: var(--accent-moon);
-        }
-
-        audio {
-            height: 32px;
-        }
-
-        /* Кнопка SeAT */
-        .seat-btn {
-            display: block;
-            background: linear-gradient(45deg, #44475a, var(--accent-purple));
+        .open-gallery-btn {
+            background: linear-gradient(90deg, #ff79c6, #bd93f9);
             color: #fff;
-            padding: 12px 24px;
+            padding: 8px 18px;
             text-decoration: none;
-            border-radius: 30px;
+            border-radius: 6px;
             font-weight: bold;
-            text-align: center;
+            font-size: 0.9em;
+            border: 1px solid var(--accent-gold);
             transition: 0.3s;
-            box-shadow: 0 0 10px rgba(189, 147, 249, 0.4);
-            margin: 10px 0;
+            box-shadow: 0 0 10px rgba(255, 121, 198, 0.3);
         }
-
-        .seat-btn:hover {
+        .open-gallery-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 20px var(--accent-pink);
+            box-shadow: 0 0 18px var(--accent-pink);
         }
-
-        /* НОВАЯ СЕКЦИЯ: Стили аниме-галереи */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .gallery-item {
+        .slider-container {
             position: relative;
-            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 8px;
             overflow: hidden;
-            border: 2px solid rgba(189, 147, 249, 0.3);
-            aspect-ratio: 1 / 1;
-            cursor: pointer;
-            transition: 0.3s ease-in-out;
+            border: 2px solid var(--accent-purple);
+            aspect-ratio: 16 / 9;
         }
-
-        .gallery-item img {
+        .slider-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: 0.5s;
+            display: none;
         }
-
-        .gallery-item:hover {
-            transform: scale(1.03);
-            border-color: var(--accent-pink);
-            box-shadow: 0 0 15px var(--accent-pink);
+        .slider-container img.active {
+            display: block;
         }
-
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .gallery-desc {
+        .slider-btn {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(11, 9, 20, 0.9));
-            padding: 8px;
-            font-size: 0.85em;
-            text-align: center;
-            color: var(--accent-moon);
-            opacity: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(12, 10, 24, 0.7);
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            font-size: 1.5em;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
             transition: 0.3s;
+            user-select: none;
         }
-
-        .gallery-item:hover .gallery-desc {
-            opacity: 1;
+        .slider-btn:hover {
+            background: var(--accent-pink);
+            color: #fff;
+            box-shadow: 0 0 10px var(--accent-pink);
         }
-
+        .slider-btn.prev { left: 10px; }
+        .slider-btn.next { right: 10px; }
+        .audio-track {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .audio-track span {
+            font-weight: bold;
+            color: var(--accent-gold);
+        }
+        audio { height: 32px; }
+        .seat-btn {
+            display: block;
+            background: linear-gradient(135deg, #1c1545, #bd93f9);
+            color: #fff;
+            padding: 14px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            transition: 0.3s;
+            border: 1px solid var(--accent-gold);
+            box-shadow: 0 0 15px rgba(189, 147, 249, 0.2);
+            margin: 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .seat-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px var(--accent-gold);
+            border-color: #fff;
+        }
         .news-item {
             border-left: 3px solid var(--accent-pink);
             padding-left: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
-
         .news-date {
-            font-size: 0.8em;
+            font-size: 0.85em;
             color: var(--accent-purple);
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-
     <header>
         <h1>NastraMoonlight</h1>
         <p>🛸 VTuber • EVE Online Streamer • Cosmic Music Creator 🌙</p>
@@ -227,8 +222,9 @@
     <div class="container">
         <div class="grid">
             
+            <!-- Левая колонка -->
             <main>
-                <!-- Стрим-плеер -->
+                <!-- Стрим -->
                 <section class="card">
                     <h2>🎥 Прямой эфир</h2>
                     <div class="twitch-wrapper">
@@ -236,46 +232,30 @@
                             src="https://twitch.tv" 
                             allowfullscreen="true" 
                             scrolling="no" 
-                            height="100%" 
-                            width="100%" 
-                            style="border:0;">
+                            height="100%" width="100%" style="border:0;">
                         </iframe>
                     </div>
                 </section>
 
-                <!-- Аниме-галерея -->
+                <!-- Слайдер Галереи -->
                 <section class="card">
-                    <h2>🖼️ Галерея артов & скриншотов</h2>
-                    <div class="gallery-grid">
-                        
-                        <!-- Картинка 1 -->
-                        <div class="gallery-item">
-                            <img src="images/art1.jpg" alt="Мой VTuber аватар">
-                            <div class="gallery-desc">Nastra Moonlight Art</div>
-                        </div>
+                    <div class="gallery-header">
+                        <h2 style="margin:0; border:0; padding:0;">🖼️ Галерея</h2>
+                        <a href="gallery.html" class="open-gallery-btn">Открыть галерею</a>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <img src="images/art1.jpg" class="active" alt="Art 1">
+                        <img src="images/eve1.jpg" alt="EVE 1">
+                        <img src="images/art2.jpg" alt="Art 2">
+                        <img src="images/eve2.jpg" alt="EVE 2">
 
-                        <!-- Картинка 2 -->
-                        <div class="gallery-item">
-                            <img src="images/eve1.jpg" alt="Вылет в нули">
-                            <div class="gallery-desc">EVE Online Fleet</div>
-                        </div>
-
-                        <!-- Картинка 3 -->
-                        <div class="gallery-item">
-                            <img src="images/art2.jpg" alt="Чиби версия">
-                            <div class="gallery-desc">Chibi Nastra</div>
-                        </div>
-
-                        <!-- Картинка 4 -->
-                        <div class="gallery-item">
-                            <img src="images/eve2.jpg" alt="Красивый космос">
-                            <div class="gallery-desc">Jita 4-4 View</div>
-                        </div>
-
+                        <div class="slider-btn prev" onclick="changeSlide(-1)">&#10094;</div>
+                        <div class="slider-btn next" onclick="changeSlide(1)">&#10095;</div>
                     </div>
                 </section>
 
-                <!-- Музыкальный плеер -->
+                <!-- Плеер -->
                 <section class="card">
                     <h2>🎵 Моя Музыка</h2>
                     <div class="audio-track">
@@ -295,8 +275,9 @@
                 </section>
             </main>
 
+            <!-- Правая колонка -->
             <aside>
-                <!-- Сервисы EVE Online -->
+                <!-- EVE Online -->
                 <section class="card" style="text-align: center;">
                     <h2>🚀 EVE Online</h2>
                     <p>Доступ к корпоративным сервисам альянса.</p>
@@ -309,3 +290,30 @@
                     <div class="news-item">
                         <div class="news-date">Сегодня</div>
                         <h4 style="margin: 5px 0;">Запуск личного сайта!</h4>
+                        <p style="font-size: 0.9em; margin: 5px 0;">Добро пожаловать в мою лунную обитель. Рада видеть вас тут!</p>
+                    </div>
+                </section>
+            </aside>
+
+        </div>
+    </div>
+
+    <!-- Скрипт слайдера -->
+    <script>
+        let currentSlide = 0;
+        function changeSlide(direction) {
+            const slides = document.querySelectorAll('.slider-container img');
+            if(slides.length === 0) return;
+            slides[currentSlide].classList.remove('active');
+            currentSlide += direction;
+            if (currentSlide >= slides.length) {
+                currentSlide = 0;
+            } else if (currentSlide < 0) {
+                currentSlide = slides.length - 1;
+            }
+            slides[currentSlide].classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
