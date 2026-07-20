@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         :root {
-            --bg-color: #050409;
-            --panel-bg: rgba(10, 8, 22, 0.85);
+            --bg-color: #0c0a18;
+            --panel-bg: rgba(18, 14, 36, 0.85);
             --accent-gold: #f1fa8c; 
             --accent-pink: #ff79c6;
             --accent-purple: #bd93f9;
@@ -22,15 +22,15 @@
             font-family: 'Segoe UI', Roboto, sans-serif;
             color: var(--text-color);
             background-color: var(--bg-color);
-            /* ФОНОВЫЙ АРТ: Замени 'images/main-bg.jpg' на свою красивую картинку космоса/арта */
-            background-image: linear-gradient(rgba(5, 4, 9, 0.4), rgba(5, 4, 9, 0.85)), url('images/main-bg.jpg');
+            /* Исправлено масштабирование фона для мобилок */
+            background-image: linear-gradient(rgba(12, 10, 24, 0.5), rgba(12, 10, 24, 0.9)), url('images/main-bg.jpg');
             background-size: cover;
-            background-position: center top;
+            background-position: center center;
             background-attachment: fixed;
             background-repeat: no-repeat;
         }
 
-        /* Вертикальное левое меню в стиле RO3 */
+        /* Адаптивное боковое меню в стиле RO3 */
         .sidebar {
             position: fixed;
             top: 0; left: 0; bottom: 0;
@@ -44,6 +44,7 @@
             padding: 30px 0;
             z-index: 1000;
             box-shadow: 5px 0 25px rgba(0,0,0,0.7);
+            box-sizing: border-box;
         }
 
         .sidebar-logo {
@@ -52,18 +53,18 @@
             text-shadow: 0 0 10px var(--accent-gold);
         }
 
-        .nav-links {
+        .nav-links, .sidebar-socials {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 25px;
+            align-items: center;
         }
 
-        .nav-links a {
+        .nav-links a, .sidebar-socials a {
             color: #aaa;
-            font-size: 1.5em;
+            font-size: 1.6em;
             text-decoration: none;
             transition: 0.3s;
-            position: relative;
         }
 
         .nav-links a:hover, .nav-links a.active {
@@ -72,104 +73,95 @@
             transform: scale(1.1);
         }
 
-        .sidebar-socials {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .sidebar-socials a {
-            color: var(--text-color);
-            font-size: 1.5em;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
         .sidebar-socials a:hover {
             color: var(--accent-gold);
         }
 
-        /* Главная контентная зона сдвинута от меню */
+        /* Главная оболочка с правильным отступом */
         .main-wrapper {
             margin-left: 80px;
-            padding-bottom: 50px;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
+        /* Полная перестройка макета под мобильные телефоны */
         @media (max-width: 768px) {
             .sidebar {
-                position: static;
+                position: fixed;
+                top: auto; left: 0; bottom: 0; right: 0;
                 width: 100%;
-                height: auto;
+                height: 60px;
                 flex-direction: row;
-                padding: 15px 20px;
-                box-sizing: border-box;
+                padding: 0 20px;
                 border-right: none;
-                border-bottom: 2px solid var(--border-gold);
+                border-top: 2px solid var(--border-gold);
+                box-shadow: 0 -5px 25px rgba(0,0,0,0.7);
             }
             .nav-links, .sidebar-socials {
                 flex-direction: row;
                 gap: 20px;
             }
-            .main-wrapper { margin-left: 0; }
+            .sidebar-logo { display: none; }
+            .main-wrapper { 
+                margin-left: 0; 
+                padding-bottom: 80px; /* Отступ снизу, чтобы меню не перекрывало контент */
+            }
+            .hero-section h1 { font-size: 2.2em !important; }
+            .content-container { grid-template-columns: 1fr !important; }
         }
 
-        /* Центральный промо-блок а-ля заставка игры */
+        /* Шапка сайта */
         .hero-section {
             text-align: center;
-            padding: 100px 20px 60px 20px;
+            padding: 40px 10px 30px 10px;
         }
 
         .hero-section h1 {
-            font-size: 4em;
+            font-size: 3.5em;
             margin: 0;
             color: var(--accent-gold);
-            text-shadow: 0 0 25px rgba(241, 250, 140, 0.7);
-            letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(241, 250, 140, 0.6);
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
         .hero-section p {
-            font-size: 1.3em;
+            font-size: 1.1em;
             color: var(--accent-pink);
             margin: 10px 0 0 0;
             font-style: italic;
-            text-shadow: 0 0 10px rgba(255, 121, 198, 0.5);
         }
 
-        /* Сетка для блоков */
+        /* Контейнер сетки */
         .content-container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 0 20px;
             display: grid;
-            grid-template-columns: 1.8fr 1fr;
-            gap: 30px;
+            grid-template-columns: 1.7fr 1fr;
+            gap: 20px;
         }
 
-        @media (max-width: 950px) {
-            .content-container { grid-template-columns: 1fr; }
-        }
-
-        /* Игровые полупрозрачные панели */
+        /* Карточки-панели */
         .game-card {
             background: var(--panel-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 2px solid var(--border-gold);
             border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 0 15px rgba(189, 147, 249, 0.05);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-sizing: border-box;
+            overflow: hidden;
         }
 
         h2 {
             color: var(--accent-gold);
-            font-size: 1.5em;
+            font-size: 1.4em;
             border-bottom: 2px solid var(--accent-purple);
-            padding-bottom: 10px;
+            padding-bottom: 8px;
             margin-top: 0;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
         .twitch-box {
             position: relative;
@@ -195,11 +187,11 @@
         .gallery-game-btn {
             background: linear-gradient(90deg, #ff79c6, #bd93f9);
             color: #fff;
-            padding: 8px 20px;
+            padding: 6px 14px;
             text-decoration: none;
             border-radius: 6px;
             font-weight: bold;
-            font-size: 0.9em;
+            font-size: 0.85em;
             border: 1px solid var(--accent-gold);
             transition: 0.3s;
         }
@@ -230,8 +222,8 @@
             background: rgba(8, 6, 16, 0.8);
             border: 1px solid var(--accent-gold);
             color: var(--accent-gold);
-            font-size: 1.3em;
-            padding: 8px 14px;
+            font-size: 1.2em;
+            padding: 6px 12px;
             cursor: pointer;
             border-radius: 4px;
             transition: 0.3s;
@@ -243,24 +235,28 @@
         .slide-arrow.right-arr { right: 10px; }
 
         .audio-row {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 10px 14px;
             border-radius: 6px;
             margin-bottom: 10px;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 10px;
             border: 1px solid rgba(255,255,255,0.03);
         }
 
+        @media (min-width: 480px) {
+            .audio-row { flex-direction: row; justify-content: space-between; align-items: center; }
+        }
+
         .audio-row span { font-weight: bold; color: var(--accent-gold); }
-        audio { height: 32px; }
+        audio { height: 32px; width: 100%; max-width: 300px; }
 
         .game-seat-btn {
             display: block;
             background: linear-gradient(135deg, #1c1545, #bd93f9);
             color: #fff;
-            padding: 14px;
+            padding: 12px;
             text-decoration: none;
             border-radius: 6px;
             font-weight: bold;
@@ -279,7 +275,7 @@
         .blog-item {
             border-left: 3px solid var(--accent-pink);
             padding-left: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .blog-date { font-size: 0.8em; color: var(--accent-purple); font-weight: bold; }
@@ -287,7 +283,7 @@
 </head>
 <body>
 
-    <!-- Меню слева -->
+    <!-- Меню слева (на мобильных падает вниз экрана) -->
     <div class="sidebar">
         <div class="sidebar-logo">🌙</div>
         <div class="nav-links">
