@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NastraMoonlight | VTuber Space</title>
+    <style>
+        :root {
+            --bg-color: #0b0914;
+            --panel-bg: rgba(25, 20, 45, 0.6);
+            --accent-pink: #ff79c6;
+            --accent-purple: #bd93f9;
+            --accent-moon: #f1fa8c;
+            --text-color: #f8f8f2;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: radial-gradient(circle at top, #1a153a 0%, var(--bg-color) 70%);
+            color: var(--text-color);
+            background-attachment: fixed;
+        }
+
+        header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--accent-purple);
+            box-shadow: 0 0 15px rgba(189, 147, 249, 0.3);
+            background: rgba(11, 9, 20, 0.8);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: var(--accent-moon);
+            text-shadow: 0 0 10px var(--accent-purple);
+        }
+
+        header p {
+            color: var(--accent-pink);
+            margin: 5px 0 0 0;
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        h2 {
+            color: var(--accent-pink);
+            border-bottom: 1px dashed var(--accent-purple);
+            padding-bottom: 8px;
+            margin-top: 0;
+        }
+
+        /* Адаптивный контейнер для Twitch */
+        .twitch-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* Пропорции 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 2px solid var(--accent-purple);
+            box-shadow: 0 0 15px rgba(189, 147, 249, 0.5);
+        }
+
+        .twitch-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .audio-track {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .audio-track span {
+            font-weight: bold;
+            color: var(--accent-moon);
+        }
+
+        audio {
+            height: 32px;
+        }
+
+        .seat-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #44475a, var(--accent-purple));
+            color: #fff;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            text-align: center;
+            transition: 0.3s;
+            box-shadow: 0 0 10px rgba(189, 147, 249, 0.4);
+        }
+
+        .seat-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px var(--accent-pink);
+        }
+
+        .news-item {
+            border-left: 3px solid var(--accent-pink);
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+        .news-date {
+            font-size: 0.8em;
+            color: var(--accent-purple);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>NastraMoonlight</h1>
+        <p>VTuber & EVE Online Streamer • Cosmic Music Creator</p>
+    </header>
+
+    <div class="container">
+        <div class="grid">
+            
+            <!-- Левая колонка: Стрим и Музыка -->
+            <main>
+                <!-- Раздел со стримом Twitch -->
+                <section class="card">
+                    <h2>🎥 Прямой эфир</h2>
+                    <div class="twitch-wrapper">
+                        <!-- ВНИМАНИЕ: Замени ТВОЙ_НИК_НА_TWITCH на свой логин ниже (в двух местах) -->
+                        <iframe 
+                            src="https://twitch.tv" 
+                            allowfullscreen="true" 
+                            scrolling="no" 
+                            height="100%" 
+                            width="100%" 
+                            style="border:0;">
+                        </iframe>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <h2>🎵 Моя Музыка</h2>
+                    <div class="audio-track">
+                        <div>
+                            <span>Cosmic Voyage</span>
+                            <div style="font-size: 0.8em; color:#aaa;">Авторский трек (mp3)</div>
+                        </div>
+                        <audio controls src="music/cosmic-voyage.mp3"></audio> 
+                    </div>
+                    
+                    <div class="audio-track">
+                        <div>
+                            <span>Moonlight Serenade</span>
+                            <div style="font-size: 0.8em; color:#aaa;">Vocaloid / Instrumental</div>
+                        </div>
+                        <audio controls src="music/moonlight-serenade.mp3"></audio>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Правая колонка: SeAT и Новости -->
+            <aside>
+                <section class="card" style="text-align: center;">
+                    <h2>🚀 EVE Online</h2>
+                    <p>Доступ к корпоративным сервисам и SeAT.</p>
+                    <a href="#" class="seat-btn" target="_blank">Войти в SeAT</a>
+                </section>
+
+                <section class="card">
+                    <h2>📰 Новостная лента</h2>
+                    <div class="news-item">
+                        <div class="news-date">21 июля 2026</div>
+                        <h4 style="margin: 5px 0;">Запуск личного сайта!</h4>
+                        <p style="font-size: 0.9em; margin: 5px 0;">Добро пожаловать в мою лунную обитель. Рада видеть вас тут!</p>
+                    </div>
+                </section>
+            </aside>
+
+        </div>
+    </div>
+
+</body>
+</html>
