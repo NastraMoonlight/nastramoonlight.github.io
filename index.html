@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NastraMoonlight | VTuber Space</title>
-    <!-- Подключаем красивые иконки FontAwesome -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         :root {
@@ -46,11 +45,10 @@
             font-size: 1.1em;
         }
 
-        /* Ссылки на соцсети под шапкой */
         .social-links a {
             color: var(--text-color);
-            font-size: 1.5em;
-            margin: 0 10px;
+            font-size: 1.8em;
+            margin: 0 15px;
             text-decoration: none;
             transition: 0.3s;
         }
@@ -130,7 +128,6 @@
             height: 32px;
         }
 
-        /* Кнопки для SeAT и других ссылок */
         .seat-btn {
             display: block;
             background: linear-gradient(45deg, #44475a, var(--accent-purple));
@@ -168,23 +165,21 @@
         <h1>NastraMoonlight</h1>
         <p>🛸 VTuber • EVE Online Streamer • Cosmic Music Creator 🌙</p>
         
-        <!-- Ссылки на твои соцсети (замени решетки # на реальные ссылки) -->
         <div class="social-links">
+            <!-- Ссылки на Twitch и ВК -->
             <a href="https://twitch.tv" target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>
-            <a href="#" target="_blank" title="Discord"><i class="fab fa-discord"></i></a>
-            <a href="#" target="_blank" title="VK / Telegram"><i class="fas fa-paper-plane"></i></a>
+            <a href="https://vk.ru/nastramoonlight" target="_blank" title="ВКонтакте"><i class="fab fa-vk"></i></a>
         </div>
     </header>
 
     <div class="container">
         <div class="grid">
             
-            <!-- Левая колонка: Стрим и Музыка -->
             <main>
+                <!-- Стрим-плеер -->
                 <section class="card">
                     <h2>🎥 Прямой эфир</h2>
                     <div class="twitch-wrapper">
-                        <!-- Стрим уже настроен под твой ник и домен! -->
                         <iframe 
                             src="https://twitch.tv" 
                             allowfullscreen="true" 
@@ -196,6 +191,7 @@
                     </div>
                 </section>
 
+                <!-- Музыкальный плеер -->
                 <section class="card">
                     <h2>🎵 Моя Музыка</h2>
                     <div class="audio-track">
@@ -216,15 +212,15 @@
                 </section>
             </main>
 
-            <!-- Правая колонка: SeAT и Новости -->
             <aside>
+                <!-- Сервисы EVE Online -->
                 <section class="card" style="text-align: center;">
                     <h2>🚀 EVE Online</h2>
                     <p>Доступ к корпоративным сервисам альянса.</p>
-                    <!-- Ссылка сразу ведет на поддомен seat, который ты настроила в Reg.ru -->
                     <a href="https://nastramoonlight.ru" class="seat-btn" target="_blank">Войти в SeAT</a>
                 </section>
 
+                <!-- Новости -->
                 <section class="card">
                     <h2>📰 Новостная лента</h2>
                     <div class="news-item">
