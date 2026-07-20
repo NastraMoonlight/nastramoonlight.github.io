@@ -76,7 +76,7 @@
         <h1>🌙 Лунная Галерея</h1>
         <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> На главную</a>
     </header>
-    <div class="container">
+        <div class="container">
         <!-- Сюда скрипт выведет ВСЕ картинки из папки автоматически -->
         <div class="gallery-grid" id="gallery-grid">
             <div style="color: #aaa; text-align: center; grid-column: 1/-1; padding: 40px;">Загрузка космических архивов...</div>
@@ -99,14 +99,14 @@
                 if (!response.ok) throw new Error('Не удалось прочесть папку');
                 let files = await response.json();
                 
-                // Фильтруем файлы, оставляя только форматы картинок
+                // Оставляем только картинки
                 let images = files.filter(f => /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name));
                 
-                // Разворачиваем список, чтобы новые файлы (загруженные последними) были вверху
+                // Разворачиваем список (новые файлы — вверху)
                 images.reverse();
 
                 const grid = document.getElementById('gallery-grid');
-                grid.innerHTML = ''; // Очищаем текст загрузки
+                grid.innerHTML = ''; 
 
                 if(images.length === 0) {
                     grid.innerHTML = '<div style="color: #aaa; text-align: center; grid-column: 1/-1;">Папка gallery-images пока пуста...</div>';
@@ -116,14 +116,15 @@
                 images.forEach(imgData => {
                     const card = document.createElement('div');
                     card.className = 'gallery-card';
-                    card.onclick = () => openLightbox(imgData.path);
+                    // ИСПРАВЛЕНО: берем прямую ссылку download_url
+                    card.onclick = () => openLightbox(imgData.download_url);
 
                     card.innerHTML = `
                         <div class="img-container">
-                            <img src="${imgData.path}" alt="${imgData.name}">
+                            <img src="${imgData.download_url}" alt="${imgData.name}">
                         </div>
                         <div class="gallery-info">
-                            <span>${imgData.name}</span>
+                            <span>${imgData.name.split('.')[0]}</span>
                         </div>
                     `;
                     grid.appendChild(card);
