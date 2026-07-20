@@ -100,13 +100,61 @@
     </div>
 
     <script>
+                async function loadAllImages() {
+            try {
+                // Читаем готовый список, созданный роботом
+                const response = await fetch('images.json');
+                if (!response.ok) throw new Error('Список не найден');
+                const images = await response.json();
+
+                const grid = document.getElementById('gallery-grid');
+                grid.innerHTML = ''; 
+
+                if(images.length === 0) {
+                    grid.innerHTML = '<div style="color: #aaa; text-align: center; grid-column: 1/-1;">Папка gallery-images пока пуста...</div>';
+                    return;
+                }
+
+                images.forEach(imgName => {
+                    const card = document.createElement('div');
+                    card.className = 'gallery-card';
+                    const directUrl = `gallery-images/${imgName}`;
+                    
+                    card.onclick = () => openLightbox(directUrl);
+
+                    // Красиво убираем расширение .png или .jpg из названия подписи
+                    const cleanName = imgName.replace(/\.[^/.]+$/, "");
+
+                    card.innerHTML = `
+                        <div class="img-container">
+                            <img src="${directUrl}" alt="${imgName}">
+                        </div>
+                        <div class="gallery-info">
+                            <span>${cleanName}</span>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+            } catch (e) {
+                document.getElementById('gallery-grid').innerHTML = '<div style="color: #ff79c6; text-align: center; grid-column: 1/-1;">Закиньте первую картинку в папку gallery-images, чтобы активировать галерею.</div>';
+                console.error(e);
+            }
+        }
+
         function openLightbox(imageSrc) {
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
             lightboxImg.src = imageSrc;
             lightbox.classList.add('active');
         }
-        function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        window.addEventListener('DOMContentLoaded', loadAllImages);
+
     </script>
 </body>
 </html>
