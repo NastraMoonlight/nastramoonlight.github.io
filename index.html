@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NastraMoonlight | VTuber Space</title>
+    <!-- Подключаем красивые иконки FontAwesome -->
+    <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         :root {
             --bg-color: #0b0914;
@@ -23,7 +25,7 @@
         }
 
         header {
-            padding: 20px;
+            padding: 30px 20px;
             text-align: center;
             border-bottom: 2px solid var(--accent-purple);
             box-shadow: 0 0 15px rgba(189, 147, 249, 0.3);
@@ -32,15 +34,30 @@
 
         header h1 {
             margin: 0;
-            font-size: 2.5em;
+            font-size: 2.8em;
             color: var(--accent-moon);
             text-shadow: 0 0 10px var(--accent-purple);
         }
 
         header p {
             color: var(--accent-pink);
-            margin: 5px 0 0 0;
+            margin: 8px 0 15px 0;
             font-style: italic;
+            font-size: 1.1em;
+        }
+
+        /* Ссылки на соцсети под шапкой */
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.5em;
+            margin: 0 10px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-pink);
+            text-shadow: 0 0 10px var(--accent-pink);
         }
 
         .container {
@@ -76,10 +93,9 @@
             margin-top: 0;
         }
 
-        /* Адаптивный контейнер для Twitch */
         .twitch-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* Пропорции 16:9 */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             border-radius: 12px;
@@ -114,8 +130,9 @@
             height: 32px;
         }
 
+        /* Кнопки для SeAT и других ссылок */
         .seat-btn {
-            display: inline-block;
+            display: block;
             background: linear-gradient(45deg, #44475a, var(--accent-purple));
             color: #fff;
             padding: 12px 24px;
@@ -125,6 +142,7 @@
             text-align: center;
             transition: 0.3s;
             box-shadow: 0 0 10px rgba(189, 147, 249, 0.4);
+            margin: 10px 0;
         }
 
         .seat-btn:hover {
@@ -148,7 +166,14 @@
 
     <header>
         <h1>NastraMoonlight</h1>
-        <p>VTuber & EVE Online Streamer • Cosmic Music Creator</p>
+        <p>🛸 VTuber • EVE Online Streamer • Cosmic Music Creator 🌙</p>
+        
+        <!-- Ссылки на твои соцсети (замени решетки # на реальные ссылки) -->
+        <div class="social-links">
+            <a href="https://twitch.tv" target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>
+            <a href="#" target="_blank" title="Discord"><i class="fab fa-discord"></i></a>
+            <a href="#" target="_blank" title="VK / Telegram"><i class="fas fa-paper-plane"></i></a>
+        </div>
     </header>
 
     <div class="container">
@@ -156,11 +181,10 @@
             
             <!-- Левая колонка: Стрим и Музыка -->
             <main>
-                <!-- Раздел со стримом Twitch -->
                 <section class="card">
                     <h2>🎥 Прямой эфир</h2>
                     <div class="twitch-wrapper">
-                        <!-- ВНИМАНИЕ: Замени ТВОЙ_НИК_НА_TWITCH на свой логин ниже (в двух местах) -->
+                        <!-- Стрим уже настроен под твой ник и домен! -->
                         <iframe 
                             src="https://twitch.tv" 
                             allowfullscreen="true" 
@@ -196,14 +220,15 @@
             <aside>
                 <section class="card" style="text-align: center;">
                     <h2>🚀 EVE Online</h2>
-                    <p>Доступ к корпоративным сервисам и SeAT.</p>
-                    <a href="#" class="seat-btn" target="_blank">Войти в SeAT</a>
+                    <p>Доступ к корпоративным сервисам альянса.</p>
+                    <!-- Ссылка сразу ведет на поддомен seat, который ты настроила в Reg.ru -->
+                    <a href="https://nastramoonlight.ru" class="seat-btn" target="_blank">Войти в SeAT</a>
                 </section>
 
                 <section class="card">
                     <h2>📰 Новостная лента</h2>
                     <div class="news-item">
-                        <div class="news-date">21 июля 2026</div>
+                        <div class="news-date">Сегодня</div>
                         <h4 style="margin: 5px 0;">Запуск личного сайта!</h4>
                         <p style="font-size: 0.9em; margin: 5px 0;">Добро пожаловать в мою лунную обитель. Рада видеть вас тут!</p>
                     </div>
