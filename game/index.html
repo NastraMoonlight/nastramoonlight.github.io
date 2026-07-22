@@ -62,7 +62,12 @@
             document.getElementById('stream-view').style.display = 'block';
             document.getElementById('player-view').style.display = 'none';
 
-            const peer = new Peer(ROOM_ID);
+const peer = new Peer(ROOM_ID, {
+    host: '0.peerjs.com',
+    port: 443,
+    secure: true
+});
+
             let activeConnections = [];
 
             peer.on('connection', (conn) => {
@@ -122,7 +127,12 @@
 
         } else {
             // ЛОГИКА ДЛЯ ЗРИТЕЛЕЙ (ОТПРАВКА СИГНАЛОВ)
-            const peer = new Peer();
+const peer = new Peer({
+    host: '0.peerjs.com',
+    port: 443,
+    secure: true
+});
+
             
             document.getElementById('join-btn').onclick = () => {
                 myName = document.getElementById('username').value.trim();
