@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>EVE Online Factions Game</title>
+    <style>
+        /* Обнуляем отступы, чтобы игра занимала весь экран OBS */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: transparent;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* Контейнер адаптивно подстраивается под пропорции картинки */
+        #game-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #map {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* Обертка для фишек, которая накладывается ровно поверх картинки */
+        #interactive-layer {
+            position: absolute;
+            /* Размеры будут динамически подгоняться под реальный размер картинки на экране */
+        }
+
+        /* Стили для фишек фракций */
+        .token {
+            position: absolute;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 18px;
+            color: #ffffff;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.8);
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.5);
+            transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1); /* Плавное скольжение кораблей */
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        /* Фирменные цвета фракций EVE Online */
+        .amarr { background: radial-gradient(circle, #ffe07d 0%, #b59228 100%); border: 3px solid #ffffff; }
+        .caldari { background: radial-gradient(circle, #4fa3e3 0%, #003466 100%); border: 3px solid #ffffff; }
+        .gallente { background: radial-gradient(circle, #52cc8d 0%, #004d2c 100%); border: 3px solid #ffffff; }
+        .minmatar { background: radial-gradient(circle, #ff6b6b 0%, #7a0000 100%); border: 3px solid #ffffff; }
+
+        /* Огромное окно финала по центру экрана */
+        #victory-screen {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(5, 10, 20, 0.95);
+            border: 4px solid #ffcc00;
+            color: #ffffff;
+            padding: 40px 60px;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(255, 204, 0, 0.6);
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+
+        #victory-screen h1 {
+            color: #ffcc00;
+            margin: 0 0 15px 0;
+            font-size: 32px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .champion-title {
+            font-size: 20px;
+            color: #aaaaaa;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        #champion-name {
+            font-size: 48px;
+            color: #00ffcc;
+            font-weight: bold;
+            margin-top: 15px;
+            text-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
+            animation: pulse 2s infinite ease-in-out;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); text-shadow: 0 0 20px rgba(0, 255, 204, 0.6); }
+            50% { transform: scale(1.05); text-shadow: 0 0 35px rgba(0, 255, 204, 0.9); }
+            100% { transform: scale(1); text-shadow: 0 0 20px rgba(0, 255, 204, 0.6); }
+        }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <img id="map" src="map.jpg" alt="Игровое поле">
+    
+    <!-- Интерактивный слой, который идеально совпадет с границами картинки -->
+    <div id="interactive-layer">
+        <div id="token-amarr" class="token amarr">A</div>
+        <div id="token-caldari" class="token caldari">C</div>
+        <div id="token-gallente" class="token gallente">G</div>
+        <div id="token-minmatar" class="token minmatar">M</div>
+    </div>
+
+    <!-- Модальное окно финала -->
+    <div id="victory-screen">
+        <h1 id="victory-team">ПОБЕДИЛА ФРАКЦИЯ</h1>
+        <div class="champion-title">Наш чемпион:</div>
+        <div id="champion-name">ИМЯ_ЗРИТЕЛЯ</div>
+    </div>
+</div>
+
+<script>
+    // Шаг 1: Рассчитанные процентные координаты центров кружков
+    const coordinates = {
+        1:  { x: 68.2, y: 72.8 }, 2:  { x: 81.6, y: 81.3 }, 3:  { x: 87.2, y: 64.2 },
+        4:  { x: 80.6, y: 53.6 }, 5:  { x: 73.8, y: 41.5 }, 6:  { x: 82.8, y: 39.4 },
+        7:  { x: 89.2, y: 29.5 }, 8:  { x: 78.5, y: 17.5 }, 9:  { x: 64.2, y: 34.6 },
+        10: { x: 62.9, y: 22.5 }, 11: { x: 69.2, y: 14.8 }, 12: { x: 56.5, y: 13.5 },
+        13: { x: 48.0, y: 17.5 }, 14: { x: 36.6, y: 14.9 }, 15: { x: 26.5, y: 16.9 },
+        16: { x: 18.5, y: 20.3 }, 17: { x: 12.5, y: 30.2 }, 18: { x: 16.8, y: 40.5 },
+        19: { x: 27.5, y: 50.1 }, 20: { x: 26.2, y: 62.4 }, 21: { x: 17.5, y: 68.3 },
+        22: { x: 17.5, y: 81.5 }, 23: { x: 26.6, y: 83.7 }, 24: { x: 32.2, y: 72.7 },
+        25: { x: 39.4, y: 76.5 }, 26: { x: 47.9, y: 85.5 }, 27: { x: 56.4, y: 85.5 },
+        28: { x: 60.1, y: 72.8 }
+    };
+
+    // Смещения (в пикселях), чтобы 4 фишки красиво стояли кучкой на одной ячейке и не сливались
+    const offsets = {
+        amarr:    { dx: -12, dy: -12 },
+        caldari:  { dx: 12,  dy: -12 },
+        gallente: { dx: -12, dy: 12 },
+        minmatar: { dx: 12,  dy: 12 }
+    };
+
+    const mapImg = document.getElementById('map');
+    const layer = document.getElementById('interactive-layer');
+
+    // Функция подгоняет интерактивный слой под реальные размеры и положение картинки на экране
+    function resizeLayer() {
+        const rect = mapImg.getBoundingClientRect();
+        layer.style.width = rect.width + 'px';
+        layer.style.height = rect.height + 'px';
+        layer.style.left = rect.left + 'px';
+        layer.style.top = rect.top + 'px';
+    }
+
+    // Следим за изменением размеров окна OBS
+    window.addEventListener('resize', resizeLayer);
+    mapImg.addEventListener('load', resizeLayer);
+    // Дополнительный вызов на случай, если картинка загрузилась из кэша
+    setTimeout(resizeLayer, 500);
+
+    // Функция отрисовки фишек на основе JSON от бота
+    function updatePositions(gameState) {
+        // На всякий случай пересчитаем сетку
+        resizeLayer();
+
+        const rect = mapImg.getBoundingClientRect();
+        const W = rect.width;
+        const H = rect.height;
+
+        for (let team in gameState.teams) {
+            const pos = gameState.teams[team].position;
+            const coord = coordinates[pos] || coordinates[1]; // По умолчанию на 1 позицию
+            const token = document.getElementById(`token-${team}`);
+            
+            if (token) {
+                // Переводим проценты в пиксели относительно текущего размера картинки
+                const pixelX = (coord.x / 100) * W + offsets[team].dx;
+                const pixelY = (coord.y / 100) * H + offsets[team].dy;
+
+                token.style.left = pixelX + 'px';
+                token.style.top = pixelY + 'px';
+            }
+        }
+
+        // Если игра завершена — выводим плашку чемпиона по центру экрана
+        if (!gameState.isGameActive && gameState.champion) {
+            document.getElementById('victory-team').innerText = `ПОБЕДИЛА ФРАКЦИЯ ${gameState.winningTeam.toUpperCase()}!`;
+            document.getElementById('champion-name').innerText = gameState.champion;
+            document.getElementById('victory-screen').style.display = 'block';
+        }
+    }
+
+    // Запрос актуального состояния игры раз в 1.5 секунды
+    setInterval(() => {
+        fetch('game-state.json?nocache=' + Date.now())
+            .then(res => res.json())
+            .then(data => updatePositions(data))
+            .catch(err => console.log('Синхронизация данных...'));
+    }, 1500);
+</script>
+</body>
+</html>
